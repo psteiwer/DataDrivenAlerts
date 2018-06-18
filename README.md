@@ -20,3 +20,8 @@ Take /Assets/DataDrivenAlerts.png and copy it into <install dir>/CSP/broker/imag
 *Note: This can also be a remote image path.*
 	
 Additional <a href src="http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=D2IMP_ch_settings#D2IMP_settings_icons">documentation</a> is available for User-Defined Icons.
+
+# Adding the Custom Action to a Widget
+Now that the Custom Action has been configured, a new control can be added to use DataDrivenAlerts.
+
+In the Control Wizard, the new custom action can be selected in the "Action" dropdown. It will be called "DataDrivenAlert" (or your custom name). If a User-defined Icon was defined, it will be available in the "Control Label or Icon" dropdown. After selecting OK, the custom action will be added to your Widget.
