@@ -50,7 +50,7 @@ Method SendAlert(pAlert As DataDrivenAlerts.Alert) As %Status
 	Set tSC=$$$OK
 	Set tMail=##class(%Net.MailMessage).%New()
 	Do tMail.To.Insert("psteiwer@intersystems.com")
- 	Set tMail.From="DeepSeeExtensions"
+ 	Set tMail.From="DataDrivenAlerts"
  	Set tSMTP=##class(%Net.SMTP).%New()
  	Set tSMTP.smtpserver=##class(%SYS.Task.Config).GetData("MailServer")
 	If tSC {
