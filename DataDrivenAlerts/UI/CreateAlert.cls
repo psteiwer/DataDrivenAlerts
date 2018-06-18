@@ -108,7 +108,7 @@ ClientMethod addAlert() [ Language = javascript ]
 
 ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As %String, pFrequency As %Integer, pMeasure As %String, pOperator As %String, pQuery As %String, pUser As %String, pValue As %Integer) As %Status [ ZenMethod ]
 {
-	Set tAlert=##class(DeepSeeExtensions.Alerts.Alert).%New()
+	Set tAlert=##class(DataDrivenAlerts.Alert).%New()
 	Set tAlert.Cube=pCube
 	Set tAlert.Dashboard=pDashboard
 	Set tAlert.FilterSpec=pFilterSpec
@@ -121,7 +121,7 @@ ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As 
 	Set tSC=tAlert.%Save()
 	If $$$ISERR(tSC) Quit tSC
 	
-	Set tSC=##class(DeepSeeExtensions.Alerts.Task).ConfigureTask()
+	Set tSC=##class(DataDrivenAlerts.Task).ConfigureTask()
 	
 	Quit tSC
 }

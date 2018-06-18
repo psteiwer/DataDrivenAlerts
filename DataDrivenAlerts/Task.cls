@@ -14,7 +14,7 @@ Method OnTask() As %Status
 					Continue
 				}
 			}
-			Set tAlert=##class(DeepSeeExtensions.Alerts.Alert).%OpenId(tRS.%Get("ID"))
+			Set tAlert=##class(DataDrivenAlerts.Alert).%OpenId(tRS.%Get("ID"))
 			Set tMDX=tAlert.Query
 			If tAlert.FilterSpec'="" {
 				Set tMDX="SELECT "_tAlert.Measure_" on 0 FROM ["_tAlert.Cube_"] "_tAlert.FilterSpec
@@ -45,7 +45,7 @@ Method OnTask() As %Status
 	Quit status
 }
 
-Method SendAlert(pAlert As DeepSeeExtensions.Alerts.Alert) As %Status
+Method SendAlert(pAlert As DataDrivenAlerts.Alert) As %Status
 {
 	Set tSC=$$$OK
 	Set tMail=##class(%Net.MailMessage).%New()
@@ -68,7 +68,7 @@ Method SendAlert(pAlert As DeepSeeExtensions.Alerts.Alert) As %Status
 
 ClassMethod ConfigureTask() As %Status
 {
-	Set tSQL="Select Frequency From DeepSeeExtensions_Alerts.Alert WHERE Active=1"
+	Set tSQL="Select Frequency From DataDrivenAlerts.Alert WHERE Active=1"
 	Set tRS=##class(%SQL.Statement).%ExecDirect(,tSQL)
 	Set tHasTasks=0
 	Set tFrequency=24
@@ -92,9 +92,9 @@ ClassMethod ConfigureTask() As %Status
 		Set tTask = ##class(%SYS.Task).%OpenId(tTaskID,,.tSC)
 	}
 	
-	Set tTask.TaskClass = "DeepSeeExtensions.Alerts.Task"
+	Set tTask.TaskClass = "DataDrivenAlerts.Task"
 	Set tTask.RunAsUser = "_SYSTEM"
-	Set tTask.Description = "Executes DeepSeeExtensions Alerts"
+	Set tTask.Description = "Executes DataDrivenAlerts Task"
 	
 	// Set schedule according to passed in parameters
 	Set tTask.TimePeriod = 0			
