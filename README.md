@@ -12,3 +12,11 @@ If (pAction="DataDrivenAlert") {
 }
 ```
 If you did not define the action name as"DataDrivenAlert", please use your action name in the If statement.
+
+## Define a User-defined Icon
+This icon will serve as the clickable icon that will trigger the action from a widget. This step is optional and can be replaced with your own icon, or simply a text label.
+
+Take /Assets/DataDrivenAlerts.png and copy it into <install dir>/CSP/broker/images/. Next, navigate to the User-defined Icons tab in the Analytics Settings (Managment Portal -> Analytics -> Admin -> Settings -> User-defined Icons). Create a new Icon definition and name it "DataDrivenAlerts" with a path of "images/DataDrivenAlert.png".
+*Note: This can also be a remote image path.*
+	
+Additional <a href src="http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=D2IMP_ch_settings#D2IMP_settings_icons">documnetation</a> is available for User-Defined Icons.
