@@ -6,7 +6,7 @@ Parameter TaskName = "DeepSee Alert";
 Method OnTask() As %Status
 {
 	Try {
-		Set tSQL="Select ID,Frequency From DeepSeeExtensions_Alerts.Alert WHERE Active=1"
+		Set tSQL="Select ID,Frequency From DataDrivenAlerts.Alert WHERE Active=1"
 		Set tRS=##class(%SQL.Statement).%ExecDirect(,tSQL)
 		While tRS.%Next() {
 			If tRS.%Get("Frequency")=24 {
