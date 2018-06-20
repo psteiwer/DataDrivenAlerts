@@ -33,12 +33,12 @@ Method OnTask() As %Status
 			}
 			
 			If tRes {
-				Do ..SendAlert(.tAlert)
+				Set tSC=..SendAlert(.tAlert)
 				Set:'tAlert.Repeatable tAlert.Active=0
 				Do tAlert.%Save()
 			}
 			
-			Set tSC = ##class(DataDrivenAlerts.TaskLog).LogTask(.tAlert,tValue,tRes)
+			Set tSC = ##class(DataDrivenAlerts.TaskLog).LogTask(.tAlert,tValue,tRes,tSC)
 		}
 	} Catch ex {
 		Set tSC = ex.AsStatus()

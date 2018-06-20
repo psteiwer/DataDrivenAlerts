@@ -8,9 +8,11 @@ Property AlertTriggered As %Boolean;
 
 Property CurrentAlertActive As %Boolean;
 
+Property SendStatus As %Status;
+
 Property Value As %Integer; 
 
-ClassMethod LogTask(ByRef pAlert, pValue, pRes) As %Status
+ClassMethod LogTask(ByRef pAlert, pValue, pRes, pSendStatus) As %Status
 {
 	Set tSC = $$$OK
 	
@@ -18,6 +20,7 @@ ClassMethod LogTask(ByRef pAlert, pValue, pRes) As %Status
 	Set tTaskLog.Alert = pAlert
 	Set tTaskLog.AlertTriggered = pRes
 	Set tTaskLog.CurrentAlertActive = pAlert.Active
+	Set tTaskLog.SendStatus = pSendStatus
 	Set tTaskLog.Value = pValue
 	
 	Set tSC = tTaskLog.%Save()
@@ -41,6 +44,9 @@ Storage Default
 </Value>
 <Value name="5">
 <Value>Value</Value>
+</Value>
+<Value name="6">
+<Value>SendStatus</Value>
 </Value>
 </Data>
 <DataLocation>^DataDrivenAlerts.TaskLogD</DataLocation>
