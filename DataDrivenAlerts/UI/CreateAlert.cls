@@ -20,6 +20,7 @@ XData dialogBody [ XMLNamespace = "http://www.intersystems.com/zen" ]
 <text id="cubename" label="Cube Name" hidden="true" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
 <text id="dashboard" hidden="true" label="Dashboard" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
 <radioSet id="frequency" label="Frequency" required="true" displayList="1 Hour,24 Hours" valueList="1,24"/>
+<radioSet id="repeatable" label="Repeatable" required="true" displayList="Yes,No" valueList="1,0"/>
 <textarea id="query" hidden="true" label="Query" required="true" readOnly="true"/>
 <textarea id="currfilterspec" hidden="true" label="Current Filter Spec" required="true" readOnly="true"/>
 <select id="measure" required="true" label="Measure"/>
@@ -97,22 +98,24 @@ ClientMethod addAlert() [ Language = javascript ]
 	var dashboard=zen('dashboard').getValue();
 	var filterspec=zen('currfilterspec').getValue();
 	var frequency=zen('frequency').getValue();
+	var repeatable=zen('repeatable').getValue();
 	var query=zen('query').getValue();
 	var measure=zen('measure').getValue();
 	var operator=zen('operator').getValue();
 	var user=zen('user').getValue();
 	var value=zen('value').getValue();
-	this.AddNewAlert(cube,dashboard,filterspec,frequency,measure,operator,query,user,value);
+	this.AddNewAlert(cube,dashboard,filterspec,frequency,repeatable,measure,operator,query,user,value);
 	return;
 }
 
-ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As %String, pFrequency As %Integer, pMeasure As %String, pOperator As %String, pQuery As %String, pUser As %String, pValue As %Integer) As %Status [ ZenMethod ]
+ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As %String, pFrequency As %Integer, pRepeatable, pMeasure As %String, pOperator As %String, pQuery As %String, pUser As %String, pValue As %Integer) As %Status [ ZenMethod ]
 {
 	Set tAlert=##class(DataDrivenAlerts.Alert).%New()
 	Set tAlert.Cube=pCube
 	Set tAlert.Dashboard=pDashboard
 	Set tAlert.FilterSpec=pFilterSpec
 	Set tAlert.Frequency=+pFrequency
+	Set tAlert.Repeatable=pRepeatable
 	Set tAlert.Measure=pMeasure
 	Set tAlert.Operator=pOperator
 	Set tAlert.Query=pQuery

@@ -17,6 +17,8 @@ Property Operator As %String;
 
 Property Query As %String(MAXLEN = 32000);
 
+Property Repeatable As %Boolean;
+
 Property User As %String;
 
 Property Value As %Integer;
@@ -56,6 +58,9 @@ Storage Default
 </Value>
 <Value name="11">
 <Value>Value</Value>
+</Value>
+<Value name="12">
+<Value>Repeatable</Value>
 </Value>
 </Data>
 <DataLocation>^DataDrivenAlerts.AlertD</DataLocation>

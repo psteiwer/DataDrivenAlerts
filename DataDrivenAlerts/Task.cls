@@ -33,7 +33,7 @@ Method OnTask() As %Status
 			
 			If tRes {
 				Do ..SendAlert(.tAlert)
-				Set tAlert.Active=0
+				Set:'tAlert.Repeatable tAlert.Active=0
 				Do tAlert.%Save()
 			}
 			
