@@ -36,6 +36,8 @@ Method OnTask() As %Status
 				Set tAlert.Active=0
 				Do tAlert.%Save()
 			}
+			
+			Set tSC = ##class(DataDrivenAlerts.TaskLog).LogTask(.tAlert,tValue,tRes)
 		}
 		Set status = $$$OK
 	} Catch ex {
