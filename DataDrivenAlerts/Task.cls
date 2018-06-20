@@ -18,7 +18,7 @@ Method OnTask() As %Status
 			Set tAlert=##class(DataDrivenAlerts.Alert).%OpenId(tRS.%Get("ID"))
 			Set tMDX=tAlert.Query
 			If tAlert.FilterSpec'="" {
-				Set tMDX="SELECT "_tAlert.Measure_" on 0 FROM ["_tAlert.Cube_"] "_tAlert.FilterSpec
+				Set tMDX="SELECT [MEASURES].["_tAlert.Measure_"] on 0 FROM ["_tAlert.Cube_"] "_tAlert.FilterSpec
 			}
 			Set tRS2=##class(%DeepSee.ResultSet).%ExecuteDirect(tMDX)
 			Set tValue = tRS2.%GetOrdinalValue(1,1)
