@@ -8,7 +8,7 @@ After importing and completing a couple configuration steps, a custom action can
 Since a custom action is being used to present this feature to users, the custom action must be defined. For more information, please see the <a href src="http://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=D2IMP_ch_action">documentation</a> for defining custom actions. Define the action name as "DataDrivenAlert" (or any name you prefer). The condition in %OnDashboardAction should be:
 ```
 If (pAction="DataDrivenAlert") {
-	Set pContext.command = "popup:DataDrivenAlerts.UI.CreateAlert.cls?USERNAME="_$zconvert($username,"O","URL")_"&QUERY="_$zconvert(pContext.mdx,"O","URL")_"&CURRFILTERSPEC="_$zconvert(pContext.currFilterSpec,"O","URL")_"&CUBENAME="_$zconvert(pContext.cubeName,"O","URL")
+	Set pContext.command = ##class(DataDrivenAlerts.Utils).GenerateCommand(pContext)
 }
 ```
 If you did not define the action name as"DataDrivenAlert", please use your action name in the If statement.
