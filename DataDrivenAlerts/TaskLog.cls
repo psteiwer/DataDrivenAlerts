@@ -8,11 +8,13 @@ Property AlertTriggered As %Boolean;
 
 Property CurrentAlertActive As %Boolean;
 
+Property MDX As %String(MAXLEN = 32000);
+
 Property SendStatus As %Status;
 
 Property Value As %Integer; 
 
-ClassMethod LogTask(ByRef pAlert, pValue, pRes, pSendStatus) As %Status
+ClassMethod LogTask(ByRef pAlert, pValue, pRes, pSendStatus, pMDX) As %Status
 {
 	Set tSC = $$$OK
 	
@@ -20,6 +22,7 @@ ClassMethod LogTask(ByRef pAlert, pValue, pRes, pSendStatus) As %Status
 	Set tTaskLog.Alert = pAlert
 	Set tTaskLog.AlertTriggered = pRes
 	Set tTaskLog.CurrentAlertActive = pAlert.Active
+	Set tTaskLog.MDX = $E(pMDX,1,32000) // Truncate if MDX string is too long
 	Set tTaskLog.SendStatus = pSendStatus
 	Set tTaskLog.Value = pValue
 	
@@ -47,6 +50,9 @@ Storage Default
 </Value>
 <Value name="6">
 <Value>SendStatus</Value>
+</Value>
+<Value name="7">
+<Value>MDX</Value>
 </Value>
 </Data>
 <DataLocation>^DataDrivenAlerts.TaskLogD</DataLocation>

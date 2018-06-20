@@ -38,7 +38,7 @@ Method OnTask() As %Status
 				Do tAlert.%Save()
 			}
 			
-			Set tSC = ##class(DataDrivenAlerts.TaskLog).LogTask(.tAlert,tValue,tRes,tSC)
+			Set tSC = ##class(DataDrivenAlerts.TaskLog).LogTask(.tAlert,tValue,tRes,tSC,tMDX)
 		}
 	} Catch ex {
 		Set tSC = ex.AsStatus()
