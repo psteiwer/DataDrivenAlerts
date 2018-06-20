@@ -54,16 +54,20 @@ Method SendAlert(pAlert As DataDrivenAlerts.Alert) As %Status
 	Do tMail.To.Insert("psteiwer@intersystems.com")
  	Set tMail.From="DataDrivenAlerts"
  	Set tSMTP=##class(%Net.SMTP).%New()
- 	Set tSMTP.smtpserver=##class(%SYS.Task.Config).GetData("MailServer")
-	If tSC {
+ 	Set tMailServer=##class(%SYS.Task.Config).GetData("MailServer")
+	If tMailServer'="" {
+		Set tSMTP.smtpserver=tMailServer
 		Set tMail.IsHTML=1
  		Set tMail.Subject="Alert condition of "_pAlert.Measure_pAlert.Operator_pAlert.Value_" has been met"
  		Do tMail.TextData.WriteLine("<p>Dear "_pAlert.User_",")
  		Do tMail.TextData.WriteLine("<br/><br/>This message is to inform you that the alert condition of "_pAlert.Measure_pAlert.Operator_pAlert.Value_" has been met.")
  		Do tMail.TextData.WriteLine("<br/>Please <a href="""_pAlert.Dashboard_""">click here</a> to view the dashboard this alert was created from")
+ 		
+ 		Set tSC=tSMTP.Send(tMail)
+	} Else {
+		Set tSC=$$$ERROR($$$GeneralError,"Mail server not configured")
 	}
 	
-	Set tSC=tSMTP.Send(tMail)
 	
 	Quit tSC
 }
