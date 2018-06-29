@@ -23,6 +23,8 @@ Property User As %String;
 
 Property Value As %Integer;
 
+Property Email As %String;
+
 Storage Default
 {
 <Data name="AlertDefaultData">
@@ -61,6 +63,9 @@ Storage Default
 </Value>
 <Value name="12">
 <Value>Repeatable</Value>
+</Value>
+<Value name="13">
+<Value>Email</Value>
 </Value>
 </Data>
 <DataLocation>^DataDrivenAlerts.AlertD</DataLocation>

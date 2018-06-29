@@ -17,6 +17,7 @@ XData dialogBody [ XMLNamespace = "http://www.intersystems.com/zen" ]
 <pane xmlns="http://www.intersystems.com/zen" import="" cellStyle="padding-bottom:8px;">
 <vgroup>
 <text id="user" label="Username" readOnly="true" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
+<text id="email" label="Email" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
 <text id="cubename" label="Cube Name" hidden="true" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
 <text id="dashboard" hidden="true" label="Dashboard" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
 <radioSet id="frequency" label="Frequency" required="true" displayList="1 Hour,24 Hours" valueList="1,24"/>
@@ -103,12 +104,13 @@ ClientMethod addAlert() [ Language = javascript ]
 	var measure=zen('measure').getValue();
 	var operator=zen('operator').getValue();
 	var user=zen('user').getValue();
+	var email=zen('email').getValue();
 	var value=zen('value').getValue();
-	this.AddNewAlert(cube,dashboard,filterspec,frequency,repeatable,measure,operator,query,user,value);
+	this.AddNewAlert(cube,dashboard,filterspec,frequency,repeatable,measure,operator,query,user,email,value);
 	return;
 }
 
-ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As %String, pFrequency As %Integer, pRepeatable, pMeasure As %String, pOperator As %String, pQuery As %String, pUser As %String, pValue As %Integer) As %Status [ ZenMethod ]
+ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As %String, pFrequency As %Integer, pRepeatable, pMeasure As %String, pOperator As %String, pQuery As %String, pUser As %String, pEmail As %String, pValue As %Integer) As %Status [ ZenMethod ]
 {
 	Set tAlert=##class(DataDrivenAlerts.Alert).%New()
 	Set tAlert.Cube=pCube
@@ -120,6 +122,7 @@ ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As 
 	Set tAlert.Operator=pOperator
 	Set tAlert.Query=pQuery
 	Set tAlert.User=pUser
+	Set tAlert.Email=pEmail
 	Set tAlert.Value=+pValue
 	Set tSC=tAlert.%Save()
 	If $$$ISERR(tSC) Quit tSC
