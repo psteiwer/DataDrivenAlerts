@@ -16,6 +16,7 @@ Property TimeStamp As %TimeStamp [ Initialexpression = {$zdt($h,3)} ];
 
 Property Value As %Integer;
 
+/// Takes in info about an Alert Task and logs the information to the TaskLog
 ClassMethod LogTask(ByRef pAlert, pValue, pRes, pSendStatus, pMDX) As %Status
 {
 	Set tSC = $$$OK

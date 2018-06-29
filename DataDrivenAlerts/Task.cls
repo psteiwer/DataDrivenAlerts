@@ -3,6 +3,7 @@ Class DataDrivenAlerts.Task Extends %SYS.Task.Definition
 
 Parameter TaskName = "DeepSee Alert";
 
+/// Method is called when task is run. This task will find all alert conditions that need to be checked and the task will take action if necessary
 Method OnTask() As %Status
 {
 	Set tSC=$$$OK
@@ -47,6 +48,7 @@ Method OnTask() As %Status
 	Quit tSC
 }
 
+/// The SendAlert will be triggered when the alert condition has been met. This method handles sending the email alert
 Method SendAlert(pAlert As DataDrivenAlerts.Alert) As %Status
 {
 	Set tSC=$$$OK
@@ -75,6 +77,7 @@ Method SendAlert(pAlert As DataDrivenAlerts.Alert) As %Status
 	Quit tSC
 }
 
+/// This method is called each time a new alert is created. It will create or update the task as needed
 ClassMethod ConfigureTask() As %Status
 {
 	Set tSQL="Select Frequency From DataDrivenAlerts.Alert WHERE Active=1"

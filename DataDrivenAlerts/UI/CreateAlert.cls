@@ -92,6 +92,7 @@ ClientMethod ondialogStart() [ Language = javascript ]
 	zen("btnOK").setProperty("caption",$$$Text("Add Alert"));
 }
 
+/// Pulls info from the page and calls a server method to create the alert
 ClientMethod addAlert() [ Language = javascript ]
 {
 	zen('btnOK').setDisabled(true);
@@ -110,6 +111,7 @@ ClientMethod addAlert() [ Language = javascript ]
 	return;
 }
 
+/// Creates a new alert with provided information
 ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As %String, pFrequency As %Integer, pRepeatable, pMeasure As %String, pOperator As %String, pQuery As %String, pUser As %String, pEmail As %String, pValue As %Integer) As %Status [ ZenMethod ]
 {
 	Set tAlert=##class(DataDrivenAlerts.Alert).%New()
