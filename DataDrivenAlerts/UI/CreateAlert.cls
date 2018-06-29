@@ -24,9 +24,15 @@ XData dialogBody [ XMLNamespace = "http://www.intersystems.com/zen" ]
 <radioSet id="repeatable" label="Repeatable" required="true" displayList="Yes,No" valueList="1,0"/>
 <textarea id="query" hidden="true" label="Query" required="true" readOnly="true"/>
 <textarea id="currfilterspec" hidden="true" label="Current Filter Spec" required="true" readOnly="true"/>
-<select id="measure" required="true" label="Measure"/>
-<select id="operator" required="true" label="Operator" displayList="&lt;,&gt;,=" valueList="&lt;,&gt;,="/>
-<text id="value" label="Value" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
+<label id="label" value="Alert when:"/>
+<hgroup>
+<label id="cell" value="Selected Cell"/>
+<select id="measure" hidden="true" required="false" label="Measure"/>
+<spacer width="5px"/>
+<select id="operator" required="true" displayList="&lt;,&gt;,=" valueList="&lt;,&gt;,="/>
+<spacer width="5px"/>
+<text id="value" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
+</hgroup>
 </vgroup>
 </pane>
 }
