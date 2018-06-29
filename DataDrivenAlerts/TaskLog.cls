@@ -12,7 +12,9 @@ Property MDX As %String(MAXLEN = 32000);
 
 Property SendStatus As %Status;
 
-Property Value As %Integer; 
+Property TimeStamp As %TimeStamp [ Initialexpression = {$zdt($h,3)} ];
+
+Property Value As %Integer;
 
 ClassMethod LogTask(ByRef pAlert, pValue, pRes, pSendStatus, pMDX) As %Status
 {
@@ -53,6 +55,12 @@ Storage Default
 </Value>
 <Value name="7">
 <Value>MDX</Value>
+</Value>
+<Value name="8">
+<Value>Timestamp</Value>
+</Value>
+<Value name="9">
+<Value>TimeStamp</Value>
 </Value>
 </Data>
 <DataLocation>^DataDrivenAlerts.TaskLogD</DataLocation>
