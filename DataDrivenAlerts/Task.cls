@@ -1,7 +1,7 @@
 Class DataDrivenAlerts.Task Extends %SYS.Task.Definition
 {
 
-Parameter TaskName = "DeepSee Alert";
+Parameter TaskName = "Data Driven Alerts";
 
 /// Method is called when task is run. This task will find all alert conditions that need to be checked and the task will take action if necessary
 Method OnTask() As %Status
