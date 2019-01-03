@@ -33,6 +33,9 @@ XData dialogBody [ XMLNamespace = "http://www.intersystems.com/zen" ]
 <spacer width="5px"/>
 <text id="value" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
 </hgroup>
+<label id="customemail" value="Customize Email"/>
+<text id="customsubject" label="Custom Subject"/>
+<textarea id="custommessage" label="Custom Message"/>
 </vgroup>
 </pane>
 }
@@ -113,12 +116,14 @@ ClientMethod addAlert() [ Language = javascript ]
 	var user=zen('user').getValue();
 	var email=zen('email').getValue();
 	var value=zen('value').getValue();
-	this.AddNewAlert(cube,dashboard,filterspec,frequency,repeatable,measure,operator,query,user,email,value);
+	var customsubject=zen('customsubject').getValue();
+	var custommessage=zen('custommessage').getValue();
+	this.AddNewAlert(cube,dashboard,filterspec,frequency,repeatable,measure,operator,query,user,email,value,customsubject,custommessage);
 	return;
 }
 
 /// Creates a new alert with provided information
-ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As %String, pFrequency As %Integer, pRepeatable, pMeasure As %String, pOperator As %String, pQuery As %String, pUser As %String, pEmail As %String, pValue As %Integer) As %Status [ ZenMethod ]
+ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As %String, pFrequency As %Integer, pRepeatable, pMeasure As %String, pOperator As %String, pQuery As %String, pUser As %String, pEmail As %String, pValue As %Integer, pCustomSubject As %String, pCustomMessage As %String) As %Status [ ZenMethod ]
 {
 	Set tAlert=##class(DataDrivenAlerts.Alert).%New()
 	Set tAlert.Cube=pCube
@@ -132,6 +137,8 @@ ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As 
 	Set tAlert.User=pUser
 	Set tAlert.Email=pEmail
 	Set tAlert.Value=+pValue
+	Set tAlert.CustomSubject=pCustomSubject
+	Set tAlert.CustomMessage=pCustomMessage
 	Set tSC=tAlert.%Save()
 	If $$$ISERR(tSC) Quit tSC
 	

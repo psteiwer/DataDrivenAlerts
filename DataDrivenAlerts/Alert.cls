@@ -25,6 +25,11 @@ Property Value As %Integer;
 
 Property Email As %String;
 
+Property CustomSubject As %String(MAXLEN = 200);
+
+Property CustomMessage As %String(MAXLEN = 32000);
+
+
 Storage Default
 {
 <Data name="AlertDefaultData">
@@ -66,6 +71,12 @@ Storage Default
 </Value>
 <Value name="13">
 <Value>Email</Value>
+</Value>
+<Value name="14">
+<Value>CustomSubject</Value>
+</Value>
+<Value name="15">
+<Value>CustomMessage</Value>
 </Value>
 </Data>
 <DataLocation>^DataDrivenAlerts.AlertD</DataLocation>

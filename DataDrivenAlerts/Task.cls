@@ -52,7 +52,7 @@ Method OnTask() As %Status
 }
 
 /// The SendAlert will be triggered when the alert condition has been met. This method handles sending the email alert
-Method SendAlert(pAlert As DataDrivenAlerts.Alert) As %Status
+Method SendAlert(ByRef pAlert As DataDrivenAlerts.Alert) As %Status
 {
 	Set tSC=$$$OK
 	try {
@@ -64,10 +64,22 @@ Method SendAlert(pAlert As DataDrivenAlerts.Alert) As %Status
 		If tMailServer'="" {
 			Set tSMTP.smtpserver=tMailServer
 			Set tMail.IsHTML=1
-	 		Set tMail.Subject="Alert condition of "_pAlert.Measure_pAlert.Operator_pAlert.Value_" has been met"
-	 		Do tMail.TextData.WriteLine("<p>Dear "_pAlert.User_",")
-	 		Do tMail.TextData.WriteLine("<br/><br/>This message is to inform you that the alert condition of "_pAlert.Measure_pAlert.Operator_pAlert.Value_" has been met.")
-	 		Do tMail.TextData.WriteLine("<br/>Please <a href="""_pAlert.Dashboard_""">click here</a> to view the dashboard this alert was created from")
+			
+			// Add Subject to Email
+			If pAlert.CustomSubject'="" {
+				Set tMail.Subject=pAlert.CustomSubject
+			} else {
+				Set tMail.Subject="Alert condition of "_pAlert.Measure_pAlert.Operator_pAlert.Value_" has been met"
+			}
+			
+			// Add Message to Email
+			If pAlert.CustomMessage'="" {
+				Do tMail.TextData.Write(pAlert.CustomMessage)
+			} else {
+				Do tMail.TextData.WriteLine("<p>Dear "_pAlert.User_",")
+				Do tMail.TextData.WriteLine("<br/><br/>This message is to inform you that the alert condition of "_pAlert.Measure_pAlert.Operator_pAlert.Value_" has been met.")
+				Do tMail.TextData.WriteLine("<br/>Please <a href="""_pAlert.Dashboard_""">click here</a> to view the dashboard this alert was created from")
+	 		}
 	 		
 	 		Set tSC=tSMTP.Send(tMail)
 		} Else {
