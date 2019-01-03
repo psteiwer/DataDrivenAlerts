@@ -4,7 +4,7 @@ Class DataDrivenAlerts.Utils
 /// Generates the string to be returned in pContext.command
 ClassMethod GenerateCommand(ByRef pContext) As %String
 {
-	Set tCommand = "popup:DataDrivenAlerts.UI.CreateAlert.cls?USERNAME="_$zconvert($username,"O","URL")
+	Set tCommand = "popup:DataDrivenAlerts.UI.Dialog.EditAlert.cls?USERNAME="_$zconvert($username,"O","URL")
 	
 	If pContext.mdx'=""{
 		Set tCommand = tCommand_"&QUERY="_$zconvert(pContext.mdx,"O","URL")

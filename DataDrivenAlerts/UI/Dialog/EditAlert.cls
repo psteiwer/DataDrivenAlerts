@@ -1,4 +1,4 @@
-Class DataDrivenAlerts.UI.CreateAlert Extends %DeepSee.UI.Dialog.standardDialog
+Class DataDrivenAlerts.UI.Dialog.EditAlert Extends %DeepSee.UI.Dialog.standardDialog
 {
 
 Parameter APPLYBUTTON = 0;
