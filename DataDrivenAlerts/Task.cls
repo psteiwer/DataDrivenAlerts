@@ -12,7 +12,7 @@ Method OnTask() As %Status
 		Set tRS=##class(%SQL.Statement).%ExecDirect(,tSQL)
 		While tRS.%Next() {
 			If tRS.%Get("Frequency")=24 {
-				If ($P($H,",",2)/3600)>1 {
+				If ($P($H,",",2)\3600)'=12 {
 					Continue
 				}
 			}
