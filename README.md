@@ -1,5 +1,5 @@
 # DataDrivenAlerts
-Custom Action in InterSystems IRIS Business Intelligence for Data Driven Alerts
+Custom Action in InterSystems IRIS Business Intelligence for configuring and receiving Data Driven Alerts
 
 After importing and completing a couple configuration steps, a custom action can be defined for a Widget on a Dashboard that will allow users to define alert conditions for the specific widget. These conditions will be checked on a defined interval and an email will be sent to the specified user when the condition is met.
 
