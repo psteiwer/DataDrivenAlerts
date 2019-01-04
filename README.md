@@ -10,7 +10,8 @@ After installation and completing a couple configuration steps (about 5 minutes)
 3. Open terminal and ZN to desired namespace
 4. Run the following commands:
 ```
-	do $system.OBJ.Load("<PATH FROM STEP 2>/AnalyzeThis/Installer.cls","ck")
+	set path="<PATH FROM STEP 2>"
+	do $system.OBJ.LoadDir(path_"/DataDrivenAlerts/","ck",,1)
 ```
 5. Follow the Configuration steps
 
