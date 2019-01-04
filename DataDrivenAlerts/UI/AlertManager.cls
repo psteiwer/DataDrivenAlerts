@@ -1,7 +1,5 @@
 Include %DeepSee
 
-/// DeepSee CSV Import page.
-/// This page lets you import data from a CSV file into DeepSee.
 Class DataDrivenAlerts.UI.AlertManager Extends %DeepSee.UI.standardPage [ System = 4 ]
 {
 Parameter DOMAIN = "DataDrivenAlerts";
