@@ -3,6 +3,8 @@ Class DataDrivenAlerts.UI.Dialog.EditAlert Extends %DeepSee.UI.Dialog.standardDi
 
 Parameter APPLYBUTTON = 0;
 
+Property AlertId As %ZEN.Datatype.integer(ZENURL = "ALERTID");
+
 Property Username As %ZEN.Datatype.string(ZENURL = "USERNAME");
 
 Property Query As %ZEN.Datatype.string(ZENURL = "QUERY");
@@ -16,6 +18,7 @@ XData dialogBody [ XMLNamespace = "http://www.intersystems.com/zen" ]
 {
 <pane xmlns="http://www.intersystems.com/zen" import="" cellStyle="padding-bottom:8px;">
 <vgroup>
+<text id="alertid" hidden="true" value="0"/>
 <text id="user" label="Username" readOnly="true" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
 <text id="email" label="Email" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
 <text id="cubename" label="Cube Name" hidden="true" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
@@ -43,11 +46,29 @@ XData dialogBody [ XMLNamespace = "http://www.intersystems.com/zen" ]
 /// Apply changes to page.
 Method %OnAfterCreatePage() As %Status
 {
-	Set ..%GetComponentById("user").value = ..Username
-	Set ..%GetComponentById("query").value = ..Query
-	Set ..%GetComponentById("currfilterspec").value = ..CurrFilterSpec
-	Set ..%GetComponentById("cubename").value = ..CubeName
-	Set ..%GetComponentById("dashboard").value = %request.CgiEnvs("HTTP_REFERER")
+	If ..AlertId {
+		Set tAlert = ##class(DataDrivenAlerts.Alert).%OpenId(..AlertId)
+		Set ..%GetComponentById("alertid").value = ..AlertId
+		Set ..%GetComponentById("user").value = tAlert.User
+		Set ..%GetComponentById("email").value = tAlert.Email
+		Set ..%GetComponentById("cubename").value = tAlert.Cube
+		Set ..%GetComponentById("dashboard").value = tAlert.Dashboard
+		Set ..%GetComponentById("frequency").value = tAlert.Frequency
+		Set ..%GetComponentById("repeatable").value = tAlert.Repeatable
+		Set ..%GetComponentById("query").value = tAlert.Query
+		Set ..%GetComponentById("currfilterspec").value = tAlert.FilterSpec
+		Set ..%GetComponentById("measure").value = tAlert.Measure
+		Set ..%GetComponentById("operator").value = tAlert.Operator
+		Set ..%GetComponentById("value").value = tAlert.Value
+		Set ..%GetComponentById("customsubject").value = tAlert.CustomSubject
+		Set ..%GetComponentById("custommessage").value = tAlert.CustomMessage
+	} Else {
+		Set ..%GetComponentById("user").value = ..Username
+		Set ..%GetComponentById("query").value = ..Query
+		Set ..%GetComponentById("currfilterspec").value = ..CurrFilterSpec
+		Set ..%GetComponentById("cubename").value = ..CubeName
+		Set ..%GetComponentById("dashboard").value = %request.CgiEnvs("HTTP_REFERER")
+	}
 	
 	// Load Measures
 	set tDisplayList=""
@@ -70,14 +91,14 @@ Method %OnAfterCreatePage() As %Status
 /// This should be implemented in a subclass.
 Method %OnGetTitle() As %String
 {
-	Quit $$$TextHTML("Create Alert")
+	Quit $$$TextHTML("Alert Editor")
 }
 
 /// Get the (localized) subtitle string for the dialog.
 /// This should be implemented in a subclass.
 Method %OnGetSubtitle() As %String
 {
-	Quit $$$TextHTML("Create a new alert")
+	Quit $$$TextHTML("Edit alert details")
 }
 
 /// This callback, if defined, is called when the user presses the OK or Apply action buttons.
@@ -85,7 +106,7 @@ Method %OnGetSubtitle() As %String
 ClientMethod ondialogFinish(action) As %Boolean [ Language = javascript ]
 {
 	try {
-		this.addAlert();
+		this.saveAlert();
 		return true;
 	}
 	catch(ex) {
@@ -98,13 +119,14 @@ ClientMethod ondialogFinish(action) As %Boolean [ Language = javascript ]
 ClientMethod ondialogStart() [ Language = javascript ]
 {
 	zen("btnOK").focus();
-	zen("btnOK").setProperty("caption",$$$Text("Add Alert"));
+	zen("btnOK").setProperty("caption",$$$Text("Save Alert"));
 }
 
 /// Pulls info from the page and calls a server method to create the alert
-ClientMethod addAlert() [ Language = javascript ]
+ClientMethod saveAlert() [ Language = javascript ]
 {
 	zen('btnOK').setDisabled(true);
+	var alertid=zen('alertid').getValue();
 	var cube=zen('cubename').getValue();
 	var dashboard=zen('dashboard').getValue();
 	var filterspec=zen('currfilterspec').getValue();
@@ -118,14 +140,18 @@ ClientMethod addAlert() [ Language = javascript ]
 	var value=zen('value').getValue();
 	var customsubject=zen('customsubject').getValue();
 	var custommessage=zen('custommessage').getValue();
-	this.AddNewAlert(cube,dashboard,filterspec,frequency,repeatable,measure,operator,query,user,email,value,customsubject,custommessage);
+	this.AlertSave(alertid,cube,dashboard,filterspec,frequency,repeatable,measure,operator,query,user,email,value,customsubject,custommessage);
 	return;
 }
 
 /// Creates a new alert with provided information
-ClassMethod AddNewAlert(pCube As %String, pDashboard As %String, pFilterSpec As %String, pFrequency As %Integer, pRepeatable, pMeasure As %String, pOperator As %String, pQuery As %String, pUser As %String, pEmail As %String, pValue As %Integer, pCustomSubject As %String, pCustomMessage As %String) As %Status [ ZenMethod ]
+ClassMethod AlertSave(pAlertId As %Integer, pCube As %String, pDashboard As %String, pFilterSpec As %String, pFrequency As %Integer, pRepeatable, pMeasure As %String, pOperator As %String, pQuery As %String, pUser As %String, pEmail As %String, pValue As %Integer, pCustomSubject As %String, pCustomMessage As %String) As %Status [ ZenMethod ]
 {
-	Set tAlert=##class(DataDrivenAlerts.Alert).%New()
+	If pAlertId'=0 {
+		Set tAlert=##class(DataDrivenAlerts.Alert).%OpenId(pAlertId)
+	} Else {
+		Set tAlert=##class(DataDrivenAlerts.Alert).%New()
+	}
 	Set tAlert.Cube=pCube
 	Set tAlert.Dashboard=pDashboard
 	Set tAlert.FilterSpec=pFilterSpec
