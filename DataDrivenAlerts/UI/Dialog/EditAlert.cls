@@ -23,7 +23,7 @@ XData dialogBody [ XMLNamespace = "http://www.intersystems.com/zen" ]
 <text id="email" label="Email" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
 <text id="cubename" label="Cube Name" hidden="true" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
 <text id="dashboard" hidden="true" label="Dashboard" required="true" onkeydown="return zenPage.ctrlKeyDown(zenEvent);"/>
-<radioSet id="frequency" label="Frequency" required="true" displayList="1 Hour,24 Hours" valueList="1,24"/>
+<radioSet id="frequency" label="Frequency" required="true" displayList="Hourly,Daily" valueList="1,24"/>
 <radioSet id="repeatable" label="Repeatable" required="true" displayList="Yes,No" valueList="1,0"/>
 <textarea id="query" hidden="true" label="Query" required="true" readOnly="true"/>
 <textarea id="currfilterspec" hidden="true" label="Current Filter Spec" required="true" readOnly="true"/>
