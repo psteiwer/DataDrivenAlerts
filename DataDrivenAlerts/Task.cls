@@ -132,7 +132,7 @@ ClassMethod ConfigureTask() As %Status
 	Set tTask.DailyFrequency = 1
 	Set tTask.DailyFrequencyTime = 1
 	Set tTask.DailyIncrement = tFrequency
-	Set tTask.DailyStartTime = 0
+	Set tTask.DailyStartTime = 43200
 	Set tTask.DailyEndTime = 0
 	
 	// The task should be operational at the next available build time
