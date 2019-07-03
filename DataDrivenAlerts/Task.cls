@@ -37,7 +37,7 @@ Method OnTask() As %Status
 			}
 			
 			If tRes {
-				Set tSC=..SendAlert(.tAlert)
+				Set tSC=..SendAlert(.tAlert,tValue)
 				Set:'tAlert.Repeatable tAlert.Active=0
 				Do tAlert.%Save()
 			}
@@ -52,7 +52,7 @@ Method OnTask() As %Status
 }
 
 /// The SendAlert will be triggered when the alert condition has been met. This method handles sending the email alert
-Method SendAlert(ByRef pAlert As DataDrivenAlerts.Alert) As %Status
+Method SendAlert(ByRef pAlert As DataDrivenAlerts.Alert, pValue As %Integer) As %Status
 {
 	Set tSC=$$$OK
 	try {
@@ -74,7 +74,10 @@ Method SendAlert(ByRef pAlert As DataDrivenAlerts.Alert) As %Status
 			
 			// Add Message to Email
 			If pAlert.CustomMessage'="" {
-				Do tMail.TextData.Write(pAlert.CustomMessage)
+				Set tCustomMessage=pAlert.CustomMessage
+				// Replace @VALUE with pValue
+				Set tCustomMessage=$Replace(tCustomMessage,"@VALUE",pValue)
+				Do tMail.TextData.Write(tCustomMessage)
 			} else {
 				Do tMail.TextData.WriteLine("<p>Dear "_pAlert.User_",")
 				Do tMail.TextData.WriteLine("<br/><br/>This message is to inform you that the alert condition of "_pAlert.Measure_pAlert.Operator_pAlert.Value_" has been met.")
